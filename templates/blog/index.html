@@ -1,6 +1,9 @@
-<html>
-<head>Home</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}
+    Home
+{% endblock %}
+{% block content %}
+
 <h1>Welcome to my blog</h1>
 <p>Check out my latest posts below:</p>
 <ul>
@@ -18,5 +21,4 @@
         </li>
     {% endfor %}
 </ul>
-</body>
-</html>
+{% endblock %}
