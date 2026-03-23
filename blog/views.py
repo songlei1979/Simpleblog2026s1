@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.views.generic import ListView, DetailView
 
 from blog.models import Category, Post
 
@@ -25,3 +26,11 @@ def create_category(request):
         category = Category.objects.create(name=name)
         return redirect('category_detail', category_id=category.id)
     return render(request, 'blog/create_category.html')
+
+class PostListView(ListView):
+    model = Post
+    template_name = 'blog/post_list.html'
+
+class PostDetailView(DetailView):
+    model = Post
+    template_name = 'blog/post_detail.html'
