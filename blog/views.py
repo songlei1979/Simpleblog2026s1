@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from blog.models import Category, Post
 
@@ -18,3 +18,10 @@ def post_detail(request, post_id):
     post = Post.objects.get(id=post_id)
     return render(request, 'blog/post.html',
                   {'post': post})
+
+def create_category(request):
+    if request.method == 'POST':
+        name = request.POST['category_name']
+        category = Category.objects.create(name=name)
+        return redirect('category_detail', category_id=category.id)
+    return render(request, 'blog/create_category.html')
