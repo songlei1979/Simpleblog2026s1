@@ -1,4 +1,5 @@
-from django.urls import path
+
+from django.urls import path, include
 
 from blog.views import index, category_detail, post_detail, create_category, PostListView, PostDetailView, \
     PostCreateView, PostUpdateView, PostDeleteView, register
@@ -21,4 +22,5 @@ urlpatterns = [
     path('post_delete/<int:pk>/',
          PostDeleteView.as_view(), name='post_delete'),
     path('register/', register, name='register'),
+    path("accounts/", include("django.contrib.auth.urls")),
 ]
