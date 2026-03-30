@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView
 
 from blog.models import Category, Post
 
@@ -34,3 +35,10 @@ class PostListView(ListView):
 class PostDetailView(DetailView):
     model = Post
     template_name = 'blog/post_detail.html'
+
+class PostCreateView(CreateView):
+    model = Post
+    template_name = 'blog/post_create.html'
+    fields = ['title', 'body', 'category', 'snippet', 'header_image', 'author']
+    success_url = reverse_lazy('post_list')
+
