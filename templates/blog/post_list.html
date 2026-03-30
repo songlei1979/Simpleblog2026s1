@@ -5,15 +5,18 @@
 {% endblock %}
 
 {% block content %}
-    <a href="{% url 'post_create' %}">Create New Post</a>
+    <a href="{% url 'post_create' %}" class="btn btn-success">Create New Post</a>
     <ul>
-    {% for post in object_list %}
-        <li>
-            <a href="{% url 'post_detail_view' post.id %}">
-            {{ post.title }}
-        </a>
-        </li>
-        
-    {% endfor %}
+        {% for post in object_list %}
+            <li>
+                <a href="{% url 'post_detail_view' post.id %}">
+                    {{ post.title }}
+                </a>
+                <a href="{% url 'post_update' post.id %}" class="btn btn-primary">
+                    Update
+                </a>
+            </li>
+
+        {% endfor %}
     </ul>
 {% endblock %}
