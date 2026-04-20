@@ -28,3 +28,6 @@ class UserProfile(models.Model):
     github_url = models.URLField(blank=True, null=True)
     linkedin_url = models.URLField(blank=True, null=True)
     dob = models.DateField(blank=True, null=True)
+
+    def __str__(self):
+        return self.user.username

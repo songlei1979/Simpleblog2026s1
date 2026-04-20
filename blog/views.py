@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from blog.forms import CreatePostForm, PostUpdateForm
-from blog.models import Category, Post
+from blog.models import Category, Post, UserProfile
 
 
 # Create your views here.
@@ -59,9 +59,22 @@ def register(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        user = User.objects.create_user(username=username)
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        email = request.POST['email']
+        github_url = request.POST['github_url']
+        linkedin_url = request.POST['linkedin_url']
+
+        user = User(username=username,
+                    first_name=first_name,
+                    last_name=last_name,
+                    email=email)
         user.set_password(password)
         user.save()
+        profile = UserProfile(user=user,
+                              github_url=github_url,
+                              linkedin_url=linkedin_url)
+        profile.save()
         return redirect('login')
     return render(request, 'registration/register.html')
 
