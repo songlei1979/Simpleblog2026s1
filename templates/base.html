@@ -36,6 +36,12 @@
                         Posts
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="{% url 'create_users' %}">
+                        Create Users
+                    </a>
+                </li>
                 {% if not user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'register' %}">Register</a>
