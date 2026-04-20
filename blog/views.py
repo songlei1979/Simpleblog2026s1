@@ -95,10 +95,13 @@ def create_users(request):
         github_urls = data['github'].to_list()
         linkedin_urls = data['linkedin'].to_list()
         for username, password, first_name, last_name, email, github_url, linkedin_url in zip(usernames, passwords, first_names, last_names, emails, github_urls, linkedin_urls):
-            if User.objects.get(username=username):
+            try:
                 user = User.objects.get(username=username)
                 user.delete()
-            create_user(username, password, first_name, last_name, email, github_url, linkedin_url)
+                create_user(username, password, first_name, last_name, email, github_url, linkedin_url)
+            except User.DoesNotExist:
+                create_user(username, password, first_name, last_name, email, github_url, linkedin_url)
+
 
         return render(request, 'blog/create_users.html', {'uploaded_file_url': uploaded_file_url})
     return render(request, 'blog/create_users.html')
