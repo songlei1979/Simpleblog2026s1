@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from blog.forms import CreatePostForm, PostUpdateForm
-from blog.models import Category, Post, UserProfile
+from blog.models import Category, Post, UserProfile, Comments
 from blog.utils import create_user
 import pandas as pd
 
@@ -105,3 +105,21 @@ def create_users(request):
 
         return render(request, 'blog/create_users.html', {'uploaded_file_url': uploaded_file_url})
     return render(request, 'blog/create_users.html')
+
+
+def likes_unlikes(request, post_id):
+    post = Post.objects.get(id=post_id)
+    print(request.user)
+    if request.user in post.likes.all():
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+    return redirect('post_detail_view', pk=post_id)
+
+def add_comments(request, post_id):
+    if request.method == 'POST':
+        comment_body = request.POST['comment_body']
+        comment = Comments.objects.create(user=request.user,
+                                          post=Post.objects.get(id=post_id),
+                                          comment_body=comment_body)
+        return redirect('post_detail_view', pk=post_id)
